@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { lsat } from "alby-tools";
+import { fetchWithL402 } from "alby-tools";
 import './App.css'
 
 export default function App() {
@@ -11,7 +11,7 @@ export default function App() {
     setLoading(true);
     try {
       const url = `/lookup?city=${city}`;
-      const response = await lsat.fetchWithLsat(url);
+      const response = await fetchWithL402(url);
       const data = await response.json();
       setWeather(data);
     }
@@ -28,12 +28,12 @@ export default function App() {
       <img src="/src/client/assets/Alby-logo-figure-full.svg" height="100" />
       <h2>Weather Lightning</h2>
       <p>
-        City: <input type="text" value={city} onChange={(e) => { setCity(e.value) }} />
+        City: <input type="text" value={city} onChange={(e) => { setCity(e.target.value) }} />
       </p>
       <button type="button" onClick={getWeather} >Show Weather Details</button>
       <div>
         {weather.current && (
-          <p>In {weather.location.name} {weather.location.country} it is currently {weather.current.condition.text} at {weather.current.temp_c}°C</p>
+          <p>In {weather.location.name}, {weather.location.country} it is currently {weather.current.condition.text} at {weather.current.temp_c}°C</p>
         )}
         {loading && (<p>loading...</p>)}
       </div>
